@@ -7,6 +7,9 @@ import (
 )
 
 func TestCarStatusMapper_MapToResponse(t *testing.T) {
+	// Initialize timezone for tests (normally done in main)
+	appUsersTimezone, _ = time.LoadLocation("UTC")
+	
 	mapper := NewCarStatusMapper()
 
 	t.Run("Complete data mapping", func(t *testing.T) {

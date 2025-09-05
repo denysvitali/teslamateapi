@@ -56,30 +56,38 @@ type CarStatusData struct {
 
 // API Response structures (matching original API format)
 type CarStatusResponse struct {
-	Data struct {
-		Car struct {
-			CarID   int        `json:"car_id"`
-			CarName NullString `json:"car_name"`
-		} `json:"car"`
-		Status struct {
-			DisplayName     string          `json:"display_name"`
-			State           string          `json:"state"`
-			StateSince      string          `json:"state_since"`
-			Odometer        float64         `json:"odometer"`
-			CarStatus       CarStatusInfo   `json:"car_status"`
-			CarDetails      CarDetailsInfo  `json:"car_details"`
-			CarExterior     CarExteriorInfo `json:"car_exterior"`
-			CarGeodata      CarGeodataInfo  `json:"car_geodata"`
-			ClimateDetails  ClimateInfo     `json:"climate_details"`
-			BatteryDetails  BatteryInfo     `json:"battery_details"`
-			ChargingDetails ChargingInfo    `json:"charging_details"`
-		} `json:"status"`
-		Units struct {
-			UnitsLength      string `json:"unit_of_length"`
-			UnitsPressure    string `json:"unit_of_pressure"`
-			UnitsTemperature string `json:"unit_of_temperature"`
-		} `json:"units"`
-	} `json:"data"`
+	Data CarStatusData_API `json:"data"`
+}
+
+type CarStatusData_API struct {
+	Car    CarInfo_API    `json:"car"`
+	Status StatusInfo_API `json:"status"`
+	Units  UnitsInfo_API  `json:"units"`
+}
+
+type CarInfo_API struct {
+	CarID   int        `json:"car_id"`
+	CarName NullString `json:"car_name"`
+}
+
+type StatusInfo_API struct {
+	DisplayName     string          `json:"display_name"`
+	State           string          `json:"state"`
+	StateSince      string          `json:"state_since"`
+	Odometer        float64         `json:"odometer"`
+	CarStatus       CarStatusInfo   `json:"car_status"`
+	CarDetails      CarDetailsInfo  `json:"car_details"`
+	CarExterior     CarExteriorInfo `json:"car_exterior"`
+	CarGeodata      CarGeodataInfo  `json:"car_geodata"`
+	ClimateDetails  ClimateInfo     `json:"climate_details"`
+	BatteryDetails  BatteryInfo     `json:"battery_details"`
+	ChargingDetails ChargingInfo    `json:"charging_details"`
+}
+
+type UnitsInfo_API struct {
+	UnitsLength      string `json:"unit_of_length"`
+	UnitsPressure    string `json:"unit_of_pressure"`
+	UnitsTemperature string `json:"unit_of_temperature"`
 }
 
 type CarStatusInfo struct {
@@ -105,10 +113,12 @@ type CarExteriorInfo struct {
 }
 
 type CarGeodataInfo struct {
-	Location struct {
-		Latitude  float64 `json:"latitude"`
-		Longitude float64 `json:"longitude"`
-	} `json:"location"`
+	Location LocationInfo `json:"location"`
+}
+
+type LocationInfo struct {
+	Latitude  float64 `json:"latitude"`
+	Longitude float64 `json:"longitude"`
 }
 
 type ClimateInfo struct {
