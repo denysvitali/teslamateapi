@@ -35,6 +35,7 @@ jobs:
             ${{ github.repository == 'tobiasehlert/teslamateapi' && 'tobiasehlert/teslamateapi' || '' }}
             ghcr.io/${{ github.repository }}
           tags: |
+            type=raw,value=sha-{{sha}}
             type=edge
             type=ref,event=branch,enable=${{ (github.ref != 'refs/heads/main') }}
             type=semver,pattern={{version}}
