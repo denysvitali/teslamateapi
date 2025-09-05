@@ -6,6 +6,10 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+type Data struct {
+	Data any `json:"data"`
+}
+
 // TeslaMateAPICarsStatusV1 provides car status directly from PostgreSQL (clean version)
 func TeslaMateAPICarsStatusV1(c *gin.Context) {
 	// Parse car ID from URL
@@ -39,6 +43,6 @@ func TeslaMateAPICarsStatusV1(c *gin.Context) {
 			statusData.IsCharging.Valid && statusData.IsCharging.Bool,
 		)
 	}
-
-	TeslaMateAPIHandleSuccessResponse(c, "TeslaMateAPICarsStatusV1", response)
+	respData := Data{Data: response}
+	TeslaMateAPIHandleSuccessResponse(c, "TeslaMateAPICarsStatusV1", respData)
 }
