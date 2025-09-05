@@ -1,22 +1,24 @@
 # get golang container
-FROM golang:1.25.0 AS builder
+FROM --platform=$BUILDPLATFORM golang:1.25 AS builder
 
 # get args
 ARG apiVersion=unknown
+ARG TARGETOS
+ARG TARGETARCH
 
 # create and set workingfolder
-WORKDIR /go/src/
+WORKDIR /app
 
 # copy go mod files and sourcecode
 COPY go.mod go.sum ./
-COPY src/ .
+COPY src/ ./src/
 
 # download go mods and compile the program
 RUN go mod download && \
-  CGO_ENABLED=0 GOOS=linux go build \
+  CGO_ENABLED=0 GOOS=${TARGETOS} GOARCH=${TARGETARCH} go build \
   -a -installsuffix cgo -ldflags="-w -s \
   -X 'main.apiVersion=${apiVersion}' \
-  " -o app ./...
+  " -o app ./src/...
 
 
 # get alpine container
@@ -35,7 +37,7 @@ RUN apk --no-cache add ca-certificates tzdata && \
 USER nonroot:nonroot
 
 # copy binary from builder
-COPY --from=builder --chown=nonroot:nonroot --chmod=755 /go/src/app .
+COPY --from=builder --chown=nonroot:nonroot --chmod=755 /app/app .
 
 # expose port 8080
 EXPOSE 8080
