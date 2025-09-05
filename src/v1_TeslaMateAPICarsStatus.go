@@ -33,10 +33,9 @@ func TeslaMateAPICarsStatusV1(c *gin.Context) {
 
 	// Log charging status for debugging
 	if gin.IsDebugging() {
-		log.Printf("[debug] TeslaMateAPICarsStatusV1 - Car %d: charging_state=%s, plugged_in=%t, is_charging_from_db=%t", 
+		log.Printf("[debug] TeslaMateAPICarsStatusV1 - Car %d: plugged_in=%t, is_charging_from_db=%t", 
 			carID, 
-			response.Data.Status.ChargingDetails.ChargingState, 
-			response.Data.Status.ChargingDetails.PluggedIn,
+			response.Status.ChargingDetails.PluggedIn,
 			statusData.IsCharging.Valid && statusData.IsCharging.Bool,
 		)
 	}

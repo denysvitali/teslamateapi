@@ -31,6 +31,11 @@ const carStatusQuery = `
 		p.outside_temp,
 		p.inside_temp,
 		p.is_climate_on,
+		p.elevation,
+		p.tpms_pressure_fl,
+		p.tpms_pressure_fr,
+		p.tpms_pressure_rl,
+		p.tpms_pressure_rr,
 		-- Latest state information
 		s.state,
 		s.start_date AS state_since,
@@ -51,7 +56,6 @@ const carStatusQuery = `
 		ch.charge_energy_added,
 		-- Settings
 		(SELECT unit_of_length FROM settings LIMIT 1) AS unit_of_length,
-		(SELECT unit_of_pressure FROM settings LIMIT 1) AS unit_of_pressure,
 		(SELECT unit_of_temperature FROM settings LIMIT 1) AS unit_of_temperature
 	FROM cars c
 	LEFT JOIN positions p ON c.id = p.car_id AND p.date = (
@@ -112,6 +116,11 @@ func (s *CarStatusService) GetCarStatus(carID int) (*CarStatusData, error) {
 		&data.OutsideTemp,
 		&data.InsideTemp,
 		&data.IsClimateOn,
+		&data.Elevation,
+		&data.TpmsPressureFl,
+		&data.TpmsPressureFr,
+		&data.TpmsPressureRl,
+		&data.TpmsPressureRr,
 		&data.State,
 		&data.StateSince,
 		&data.IsCharging,
@@ -122,7 +131,6 @@ func (s *CarStatusService) GetCarStatus(carID int) (*CarStatusData, error) {
 		&data.ChargerActualCurrent,
 		&data.ChargeEnergyAdded,
 		&data.UnitOfLength,
-		&data.UnitOfPressure,
 		&data.UnitOfTemperature,
 	)
 
