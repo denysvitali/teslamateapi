@@ -66,10 +66,9 @@ func (m *CarStatusMapper) MapToResponse(data *CarStatusData, vehicleState string
 
 	// Climate details
 	response.Data.Status.ClimateDetails = ClimateInfo{
-		IsClimateOn:       m.getBoolValue(data.IsClimateOn),
-		InsideTemp:        m.getFloat64Value(data.InsideTemp),
-		OutsideTemp:       m.getFloat64Value(data.OutsideTemp),
-		IsPreconditioning: m.getBoolValue(data.IsPreconditioning),
+		IsClimateOn: m.getBoolValue(data.IsClimateOn),
+		InsideTemp:  m.getFloat64Value(data.InsideTemp),
+		OutsideTemp: m.getFloat64Value(data.OutsideTemp),
 	}
 
 	// Battery details

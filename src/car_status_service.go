@@ -31,7 +31,6 @@ const carStatusQuery = `
 		p.outside_temp,
 		p.inside_temp,
 		p.is_climate_on,
-		p.is_preconditioning,
 		-- Latest state information
 		s.state,
 		s.start_date AS state_since,
@@ -113,7 +112,6 @@ func (s *CarStatusService) GetCarStatus(carID int) (*CarStatusData, error) {
 		&data.OutsideTemp,
 		&data.InsideTemp,
 		&data.IsClimateOn,
-		&data.IsPreconditioning,
 		&data.State,
 		&data.StateSince,
 		&data.IsCharging,

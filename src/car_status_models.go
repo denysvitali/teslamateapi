@@ -33,7 +33,6 @@ type CarStatusData struct {
 	OutsideTemp       sql.NullFloat64 `db:"outside_temp"`
 	InsideTemp        sql.NullFloat64 `db:"inside_temp"`
 	IsClimateOn       sql.NullBool    `db:"is_climate_on"`
-	IsPreconditioning sql.NullBool    `db:"is_preconditioning"`
 
 	// State information
 	State      sql.NullString `db:"state"`
@@ -122,10 +121,9 @@ type LocationInfo struct {
 }
 
 type ClimateInfo struct {
-	IsClimateOn       bool    `json:"is_climate_on"`
-	InsideTemp        float64 `json:"inside_temp"`
-	OutsideTemp       float64 `json:"outside_temp"`
-	IsPreconditioning bool    `json:"is_preconditioning"`
+	IsClimateOn bool    `json:"is_climate_on"`
+	InsideTemp  float64 `json:"inside_temp"`
+	OutsideTemp float64 `json:"outside_temp"`
 }
 
 type BatteryInfo struct {
