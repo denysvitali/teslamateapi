@@ -74,15 +74,8 @@ func main() {
 	// initialize allowList stored for /command section
 	initCommandAllowList()
 
-	// Connect to the MQTT broker
-	statusCache, err := startMQTT()
-	if getEnvAsBool("DISABLE_MQTT", false) {
-		log.Printf("[info] TeslaMateApi MQTT connection not established.")
-	} else {
-		if err != nil {
-			log.Fatalf("[error] TeslaMateApi MQTT connection failed: %s", err)
-		}
-	}
+	// MQTT connection removed - now using Postgres-only approach
+	log.Printf("[info] TeslaMateApi using Postgres-only data access.")
 
 	if getEnvAsBool("API_TOKEN_DISABLE", false) {
 		log.Println("[warning] validateAuthToken - header authorization bearer token disabled. Authorization: Bearer token will not be required for commands.")
@@ -149,7 +142,7 @@ func main() {
 			v1.PUT("/cars/:CarID/logging/:Command", TeslaMateAPICarsLoggingV1)
 
 			// v1 /api/v1/cars/:CarID/status endpoints
-			v1.GET("/cars/:CarID/status", statusCache.TeslaMateAPICarsStatusV1)
+			v1.GET("/cars/:CarID/status", TeslaMateAPICarsStatusPostgresV1Fixed)
 
 			// v1 /api/v1/cars/:CarID/updates endpoints
 			v1.GET("/cars/:CarID/updates", TeslaMateAPICarsUpdatesV1)
@@ -187,10 +180,8 @@ func main() {
 		Handler: r,
 	}
 
-	// setting readyz endpoint to true (if not using MQTT)
-	if getEnvAsBool("DISABLE_MQTT", false) {
-		isReady.Store(true)
-	}
+	// setting readyz endpoint to true (using Postgres-only approach)
+	isReady.Store(true)
 
 	// graceful shutdown
 	quit := make(chan os.Signal, 1)
