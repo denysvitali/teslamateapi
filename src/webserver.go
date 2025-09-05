@@ -142,7 +142,7 @@ func main() {
 			v1.PUT("/cars/:CarID/logging/:Command", TeslaMateAPICarsLoggingV1)
 
 			// v1 /api/v1/cars/:CarID/status endpoints
-			v1.GET("/cars/:CarID/status", TeslaMateAPICarsStatusPostgresV1Fixed)
+			v1.GET("/cars/:CarID/status", TeslaMateAPICarsStatusV1)
 
 			// v1 /api/v1/cars/:CarID/updates endpoints
 			v1.GET("/cars/:CarID/updates", TeslaMateAPICarsUpdatesV1)
